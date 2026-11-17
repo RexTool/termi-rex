@@ -7,5 +7,4 @@ target_link_libraries(
     PRIVATE
     ftxui::screen
     ftxui::dom
-    ftxui::component
 )

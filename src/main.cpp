@@ -2,12 +2,11 @@
 
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/screen.hpp>
-#include <ftxui/screen/string.hpp>
 
 int main() {
   using namespace ftxui;
 
-  auto summary = [&] {
+  auto summary = [] {
     auto content = vbox({
         hbox({text(L"- done:   "), text(L"3") | bold}) | color(Color::Green),
         hbox({text(L"- active: "), text(L"2") | bold}) | color(Color::RedLight),
@@ -23,7 +22,6 @@ int main() {
               summary(),
               summary() | flex,
           }),
-          summary(),
           summary(),
       });
 
