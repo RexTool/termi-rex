@@ -23,6 +23,8 @@ int main() {
               summary() | flex,
           }),
           summary(),
+          summary(),
+          summary(),
       });
 
   // Limit the size of the document to 80 char.

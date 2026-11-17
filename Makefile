@@ -13,6 +13,10 @@ all:
 	$(MAKE) build
 	$(MAKE) run
 
+create:
+	$(MAKE) build
+	$(MAKE) run
+	
 configure:
 	cmake -S . -B build $(ARGS)
 
