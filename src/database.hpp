@@ -1,0 +1,1 @@
+// This is th main header file for the database module. It defines the interface for interacting with the database, including functions for connecting, querying, and managing data. The implementation details are hidden in the corresponding source file (database.cpp)
