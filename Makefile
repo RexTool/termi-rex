@@ -1,10 +1,10 @@
 .PHONY: all configure build run clean
 
 ifeq ($(OS),Windows_NT)
-GENERATOR = -G "MinGW Makefiles"
+ARGS = -G Ninja -DCMAKE_CXX_COMPILER=g++
 APP = build/bin/app.exe
 else
-GENERATOR =
+ARGS =
 APP = ./build/bin/app
 endif
 
@@ -14,7 +14,7 @@ all:
 	$(MAKE) run
 
 configure:
-	cmake -S . -B build $(GENERATOR)
+	cmake -S . -B build $(ARGS)
 
 build:
 	cmake --build build --parallel
