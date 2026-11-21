@@ -5,7 +5,7 @@ add_executable(app main.cpp)
 target_link_libraries(
     app
     PRIVATE
-    ftxui::screen
-    ftxui::dom
     ftxui::component
+    ftxui::dom
+    ftxui::screen
 )
