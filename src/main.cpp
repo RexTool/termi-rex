@@ -5,17 +5,31 @@
 
 
 int main(){
+  bool insertMode = false;
   auto screen = ftxui::ScreenInteractive::TerminalOutput();
 
-  auto layout = ftxui::vbox({
-    createLine("My first note"),
-    ftxui::separator(),
-    createLine("My first note"),
+  std::string note = "My first note";
+  auto input = ftxui::Input(&note, "Type your note...");
+
+  auto editor = ftxui::CatchEvent(input, [&insertMode](ftxui::Event event) {
+      if(event == ftxui::Event::Escape) {
+          insertMode = false;
+          return true;
+      }
+      if(!insertMode && event == ftxui::Event::i) {
+          insertMode = true;
+          return true;
+      }
+      if(event == ftxui::Event::CtrlC) {
+        return false;
+      }
+      return !insertMode;
   });
 
-  auto view = ftxui::Renderer([&layout] {
-      return layout;
+  auto view = ftxui::Renderer(editor, [&] {
+      return renderEditorView(input->Render(), insertMode);
   });
+  
 
   screen.Loop(view);
   return 0;

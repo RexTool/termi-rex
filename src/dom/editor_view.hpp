@@ -10,5 +10,9 @@
 #include <ftxui/dom/elements.hpp>
 
 ftxui::Element createLine(const std::string& content);
+ftxui::Element renderEditorView(ftxui::Element body, bool insertMode); // Starting Render View for the editor component
+ftxui::Element showTitleRow();
+ftxui::Element showStatusRow(bool insertMode);
+
 
 #endif
