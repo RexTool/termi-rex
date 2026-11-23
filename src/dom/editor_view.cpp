@@ -8,6 +8,6 @@
 #include <ftxui/dom/elements.hpp>
 
 // Creates a Line
-void createLine() {
-    
-};
+ftxui::Element createLine(const std::string& content) {
+    return ftxui::text(content);
+}
