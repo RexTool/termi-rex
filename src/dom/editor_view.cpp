@@ -12,15 +12,24 @@ ftxui::Element createLine(const std::string& content) {
     return ftxui::text(content);
 }
 
-ftxui::Element renderEditorView(ftxui::Element body, bool insertMode) {
-    return ftxui::vbox({
-        createLine("Termi-Rex"),
-        body | ftxui::border | ftxui::flex,
-        showStatusRow(insertMode)
-    });
+ftxui::Element showStatusRow(bool insertMode, const std::optional<std::string>& commandText) {
+    if (commandText.has_value()) return createLine(":" + commandText.value());
+    if (insertMode) return createLine("INSERT");
+    return createLine("NORMAL");
+}
+ftxui::Element showTitleRow(std::string title) {
+    return createLine("Termi-Rex - " + title);
 }
 
-ftxui::Element showStatusRow(bool insertMode) {
-    if(insertMode) return createLine("INSERT");
-    return createLine("NORMAL");
+ftxui::Element renderEditorView(
+    ftxui::Element body, 
+    bool insertMode,
+    std::string title,
+    const std::optional<std::string>& commandText) {
+    
+        return ftxui::vbox({
+            showTitleRow(title),
+            body | ftxui::border | ftxui::flex,
+            showStatusRow(insertMode, commandText)
+    });
 }
