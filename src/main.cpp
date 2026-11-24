@@ -11,6 +11,7 @@ int main(){
   auto screen = ftxui::ScreenInteractive::TerminalOutput();
 
   std::string note = "My first note";
+  const std::string originalNote = note;
   auto input = ftxui::Input(&note, "Type your note...");
 
   auto editor = ftxui::CatchEvent(input, [&insertMode, &commandText](ftxui::Event event) {
@@ -46,8 +47,15 @@ int main(){
   });
 
   auto view = ftxui::Renderer(editor, [&] {
-      return renderEditorView(input->Render(), insertMode, "Untitled", commandText);
-  });
+    return renderEditorView(
+        input->Render(),
+        insertMode,
+        "Untitled",
+        commandText,
+        note != originalNote,
+        ""
+    );
+});
   
 
   screen.Loop(view);
