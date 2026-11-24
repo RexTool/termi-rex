@@ -31,7 +31,7 @@ int main(int argc, char* argv[]){
   std::optional<std::string> commandText;
 
   auto screen = ftxui::ScreenInteractive::TerminalOutput();
-  auto input = ftxui::Input(&note, "Type your note...");
+  auto input = ftxui::Input(&note, "type....");
 
   auto editor = ftxui::CatchEvent(input, [&](ftxui::Event event) {
     if(commandText.has_value()) {
@@ -39,13 +39,27 @@ int main(int argc, char* argv[]){
         commandText.reset();
 
       } else if(event == ftxui::Event::Return){
-        if(commandText.value() != "w") {
-          statusMessage = "unknown command";
-        } else if (noteFile.save(note)) {
-          originalNote = note;
-          statusMessage = "Saved";
+        if(commandText.value() == "w" || commandText.value() == "wq") {
+          if(noteFile.save(note)) {
+            originalNote = note;
+            statusMessage = "saved";
+
+            if(commandText.value() == "wq") {
+              screen.Exit();
+            }
+          } else {
+            statusMessage = "saved failed";
+          }
+        } else if (commandText.value() == "q") {
+          if (note == originalNote) {
+            screen.Exit();
+          } else {
+            statusMessage = "unsaved changes - use :wq to save or :q! to discard";
+          }
+        } else if (commandText.value() == "q!") {
+          screen.Exit();
         } else {
-          statusMessage = "Save Failed";
+          statusMessage = "unknown command";
         }
         commandText.reset();
       } else if( event.is_character()) {
