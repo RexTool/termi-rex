@@ -57,6 +57,7 @@ int main(int argc, char* argv[]){
             statusMessage = "unsaved changes - use :wq to save or :q! to discard";
           }
         } else if (commandText.value() == "q!") {
+          statusMessage = "quite without saving";
           screen.Exit();
         } else {
           statusMessage = "unknown command";
@@ -84,8 +85,17 @@ int main(int argc, char* argv[]){
         return true;
     }
 
-    if(event == ftxui::Event::CtrlC) return false;
-    return !insertMode;
+    if(event == ftxui::Event::CtrlC || insertMode) return false;
+    if (event == ftxui::Event::h) {
+      input->OnEvent(ftxui::Event::ArrowLeft);
+    } else if (event == ftxui::Event::j) {
+      input->OnEvent(ftxui::Event::ArrowDown);
+    } else if (event == ftxui::Event::k) {
+      input->OnEvent(ftxui::Event::ArrowUp);
+    } else if (event == ftxui::Event::l) {
+      input->OnEvent(ftxui::Event::ArrowRight);
+    }
+    return true;
   });
 
   auto view = ftxui::Renderer(editor, [&] {
